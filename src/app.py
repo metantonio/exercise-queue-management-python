@@ -5,17 +5,46 @@ from sms import send
 # there queue has to be declared globally (outside any other function)
 # that way all methods have access to it
 queue = Queue(mode="FIFO")
-    
+cola = queue.get_queue()
+
 def print_queue():
     # you must print on the console the entire queue list
     print("Printing the entire list...")
     print(queue.get_queue())
 
 def add():
-    pass
+    cola = queue.get_queue()
+    name = input("introducir nombre del usuario: \n")
+    number = input("introducir numero de teléfono: \n")
+
+    client= {
+        "name" : name,
+        "number" : number,
+        "position": len(cola)+1
+    }
+    cola.append(client)
+    return cola
 
 def dequeue():
-    pass
+    cola = queue.get_queue()
+  #una manera de recorrer el objeto
+    for diccionario in cola:
+        nombre=diccionario["name"]
+        posicion=diccionario["position"]
+        telefono=diccionario["number"]
+        print(f"({posicion}) nombre: {nombre} y tlf: {telefono}")
+
+    opcion = int(input("cual borrar? \n"))
+
+    colaFiltrada = [index for index in cola if index["position"] != opcion]
+    cola.clear()
+    for index in colaFiltrada:
+        cola.append({"name":index["name"],"number":index["number"],"position":len(cola)+1})
+    print(cola)
+    #cola=colaFiltrada
+    return cola
+
+    
 
 def save():
     pass
@@ -42,6 +71,11 @@ What would you like to do (type a number and press Enter)?
     # add your options here using conditionals (if)
     if option == 3:
         print_queue()
+    elif option == 1:
+        add()
+        print_queue()
+    elif option ==2:
+        dequeue()
     elif option == 6:
         print("Bye bye!")
         stop = True
