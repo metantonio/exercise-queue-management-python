@@ -43,6 +43,9 @@ def dequeue():
                 #si se descomenta, se le estaría dando la opción al usuario de borrar
                 #según la "position", pero podría ser "name" o "number"
     colaFiltrada = [index for index in queue.get_queue() if index["position"] != opcion]
+    #Aquí se envía la el SMS
+    name_to_delete=queue.get_queue()[0]["name"]
+    send("Su pedido está listo, " +name_to_delete.upper(), queue.get_queue()[0]["number"])
     queue.get_queue().clear()
     for index in colaFiltrada:
         queue.get_queue().append({"name":index["name"],"number":index["number"],"position":len(cola)+1})
@@ -81,10 +84,11 @@ def load():
 
     for index in data:
         queue.get_queue().append({"name":index["name"],"number":index["number"],"position":index["position"]})
-    print(queue.get_queue())    
+    #print(queue.get_queue())    
     # Closing file 
     f.close() 
-    print(data)
+    #print(data)
+    print("Se cargó la información del json")
 
 
 print("\nHello, this is the Command Line Interface for a Queue Managment application.")

@@ -16,7 +16,7 @@ Today we are going to build a Queue system with FIFO approach for restaurants: I
 1. Clone the [following boilerplate](https://github.com/breatheco-de/exercise-queue-management-cli)
 3. Install dependency packages `$ pipenv install` or first "pip install pipenv" if it is not installed
 2. Get inside the environment by typing `$ pipenv shell`
-3. You can run the current project by typing `$ python src/app.py`
+3. You can run the current project by typing `$ pipenv ru python src/app.py`
 4. Start coding! Update the app.py file to allow the user to manage a simple Queue: Add a person, Remove person, get current line (queue).
 5. The application also needs to be able to export the queue to a file named `queue.json`.
 6. The application must integrate with the twilio API to send an SMS every time a phone number is dequeued.
@@ -64,3 +64,5 @@ This exercise will make you practice the following fundamentals:
 5. Complex Data Structures.
 6. Queue (FIFO vs FILO)
 7. SMS.
+
+pip install -U python-dotenv
