@@ -27,21 +27,21 @@ def add():
 
 def dequeue():
     cola = queue.get_queue()
-  #una manera de recorrer el objeto
+    #una manera de recorrer el objeto
     for diccionario in cola:
         nombre=diccionario["name"]
         posicion=diccionario["position"]
         telefono=diccionario["number"]
         print(f"({posicion}) nombre: {nombre} y tlf: {telefono}")
 
-    opcion = int(input("cual borrar? \n"))
-
+    opcion = 1  #int(input("cual borrar? \n")) #al borrar al primero automáticamente se comporta como FIFO
+                #si se descomenta, se le estaría dando la opción al usuario de borrar
+                #según la "position", pero podría ser "name" o "number"
     colaFiltrada = [index for index in cola if index["position"] != opcion]
     cola.clear()
     for index in colaFiltrada:
         cola.append({"name":index["name"],"number":index["number"],"position":len(cola)+1})
     print(cola)
-    #cola=colaFiltrada
     return cola
 
     
