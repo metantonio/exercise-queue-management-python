@@ -10,7 +10,12 @@ cola = queue.get_queue()
 def print_queue():
     # you must print on the console the entire queue list
     print("Printing the entire list...")
-    print(queue.get_queue())
+    #print(queue.get_queue())
+    for diccionario in cola:
+        nombre=diccionario["name"]
+        posicion=diccionario["position"]
+        telefono=diccionario["number"]
+        print(f"({posicion}) nombre: {nombre} y tlf: {telefono}")
 
 def add():
     cola = queue.get_queue()
@@ -47,12 +52,41 @@ def dequeue():
     
 
 def save():
-    pass
+    def write_json(data, filename='queue.json'): 
+        with open(filename,'w') as jsonFile: 
+            json.dump(data, jsonFile, indent=4) 
+      
+      
+    with open('queue.json') as json_file: 
+        data = json.load(json_file) 
+      
+        #temp = data["client"] 
+  
+        # python object to be appended 
+        #y = cola
+          
+        # appending data 
+        #temp.append(y) 
+      
+    write_json(cola)  
 
 def load():
-    pass 
-        
-    
+    #import json #must be avalaible
+    # Opening JSON file 
+    f = open('queue.json',) 
+
+    # returns JSON object as a dictionary 
+    data = json.load(f)
+    cola.clear()
+
+    for index in data:
+        cola.append({"name":index["name"],"number":index["number"],"position":index["position"]})
+    print(cola)    
+    # Closing file 
+    f.close() 
+    print(data)
+
+
 print("\nHello, this is the Command Line Interface for a Queue Managment application.")
 stop = False
 while stop == False:
@@ -76,6 +110,10 @@ What would you like to do (type a number and press Enter)?
         print_queue()
     elif option ==2:
         dequeue()
+    elif option ==5:
+        load()
+    elif option ==4:
+        save()    
     elif option == 6:
         print("Bye bye!")
         stop = True
