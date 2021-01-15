@@ -5,13 +5,13 @@ from sms import send
 # there queue has to be declared globally (outside any other function)
 # that way all methods have access to it
 queue = Queue(mode="FIFO")
-cola = queue.get_queue()
+#cola = queue.get_queue()
 
 def print_queue():
     # you must print on the console the entire queue list
     print("Printing the entire list...")
     #print(queue.get_queue())
-    for diccionario in cola:
+    for diccionario in queue.get_queue():
         nombre=diccionario["name"]
         posicion=diccionario["position"]
         telefono=diccionario["number"]
@@ -27,13 +27,13 @@ def add():
         "number" : number,
         "position": len(cola)+1
     }
-    cola.append(client)
-    return cola
+    queue.get_queue().append(client)
+    return queue.get_queue()
 
 def dequeue():
     cola = queue.get_queue()
     #una manera de recorrer el objeto
-    for diccionario in cola:
+    for diccionario in queue.get_queue():
         nombre=diccionario["name"]
         posicion=diccionario["position"]
         telefono=diccionario["number"]
@@ -42,12 +42,12 @@ def dequeue():
     opcion = 1  #int(input("cual borrar? \n")) #al borrar al primero automáticamente se comporta como FIFO
                 #si se descomenta, se le estaría dando la opción al usuario de borrar
                 #según la "position", pero podría ser "name" o "number"
-    colaFiltrada = [index for index in cola if index["position"] != opcion]
-    cola.clear()
+    colaFiltrada = [index for index in queue.get_queue() if index["position"] != opcion]
+    queue.get_queue().clear()
     for index in colaFiltrada:
-        cola.append({"name":index["name"],"number":index["number"],"position":len(cola)+1})
-    print(cola)
-    return cola
+        queue.get_queue().append({"name":index["name"],"number":index["number"],"position":len(cola)+1})
+    print(queue.get_queue())
+    return queue.get_queue()
 
     
 
@@ -68,7 +68,7 @@ def save():
         # appending data 
         #temp.append(y) 
       
-    write_json(cola)  
+    write_json(queue.get_queue())  
 
 def load():
     #import json #must be avalaible
@@ -77,11 +77,11 @@ def load():
 
     # returns JSON object as a dictionary 
     data = json.load(f)
-    cola.clear()
+    queue.get_queue().clear()
 
     for index in data:
-        cola.append({"name":index["name"],"number":index["number"],"position":index["position"]})
-    print(cola)    
+        queue.get_queue().append({"name":index["name"],"number":index["number"],"position":index["position"]})
+    print(queue.get_queue())    
     # Closing file 
     f.close() 
     print(data)
